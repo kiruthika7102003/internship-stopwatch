@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #74ebd5, #acb6e5); /* Gradient background in sky-blue colors */
+      margin: 0;
+      
+      
+    }
+    .card {
+      border: 1px solid #218bd1;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      background-color: #e1ebee; /* Card background color */
+    }
+    #stopwatch {
+      font-size: 2em;
+      margin: 20px;
+    }
+    h1 {
+      color: #333;
+      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-image: linear-gradient(to bottom, #1ab37a, #45a049); /* Gradient color for buttons */
+      border: none;
+      color: white;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-image: linear-gradient(to bottom, #60ce65, #4CAF50); /* Gradient color change on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Stopwatch</h1>
+    <div id="stopwatch">00:00:00</div>
+    <button id="startStopBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+  </div>
+
+  <script>
+    let stopwatchInterval;
+    let elapsedTime = 0;
+    let isRunning = false;
+
+    function startStopwatch() {
+      if (!isRunning) {
+        stopwatchInterval = setInterval(updateStopwatch, 1000);
+        document.getElementById('startStopBtn').innerText = 'Stop';
+        isRunning = true;
+      } else {
+        clearInterval(stopwatchInterval);
+        document.getElementById('startStopBtn').innerText = 'Start';
+        isRunning = false;
+      }
+    }
+
+    function resetStopwatch() {
+      clearInterval(stopwatchInterval);
+      document.getElementById('startStopBtn').innerText = 'Start';
+      isRunning = false;
+      elapsedTime = 0;
+      updateStopwatch();
+    }
+
+    function updateStopwatch() {
+      elapsedTime++;
+      const hours = Math.floor(elapsedTime / 3600);
+      const minutes = Math.floor((elapsedTime % 3600) / 60);
+      const seconds = elapsedTime % 60;
+      document.getElementById('stopwatch').innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    document.getElementById('startStopBtn').addEventListener('click', startStopwatch);
+    document.getElementById('resetBtn').addEventListener('click', resetStopwatch);
+  </script>
+</body>
+</html>
